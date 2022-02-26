@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 const Schema = mongoose.Schema;
 
 const Article = new Schema({
@@ -16,5 +17,9 @@ const Article = new Schema({
   articleImgAddress: { type: String },
   mention: { type: Schema.Types.ObjectId, ref: 'User' },
 });
+
+// mongoose-sequence 를 사용하기 위한 코드
+// id 는 하나씩 올라가게 되니까 id로 계산하는 게 훨씬 쉽다.
+Article.plugin(AutoIncrement, { inc_field: 'id' });
 
 module.exports = Article;
