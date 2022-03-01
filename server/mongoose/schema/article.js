@@ -6,7 +6,7 @@ const Article = new Schema({
   title: { type: String, required: true, unique: true },
   content: { type: String, required: true },
   board: { type: Schema.Types.ObjectId, ref: 'Board', required: true },
-  created: { type: Date, default: Date.now, required: true },
+  createdAt: { type: Date, default: Date.now, required: true },
 
   // 동적으로 변동될 수 있는 데이터
   viewCount: { type: Number, default: 0 },

@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { article } = require('./route');
+const { article, user, department } = require('./route');
 const app = express();
 const PORT = 9090;
 
@@ -10,6 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // 기능별 라우터 추가
 app.use(article);
+app.use(user);
+app.use(department);
 
 // 서버 상태 확인
 app.get('/', (req, res) => {
