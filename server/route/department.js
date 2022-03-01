@@ -14,5 +14,4 @@ router.post('/company/create', async (req, res) => {
   res.send(newDepartment._id ? true : false);
 });
 
-// 개별 게시글을 가져오는 라우팅
 module.exports = router;
