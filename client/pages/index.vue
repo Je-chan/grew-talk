@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <GNB />
+  </div>
 </template>
 
 <script>
