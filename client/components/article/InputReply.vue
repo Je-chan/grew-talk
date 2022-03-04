@@ -1,11 +1,10 @@
 <template>
   <div id="input-comment">
     <CameraIcon class="icon" />
-    <div v-if="!enlarge" class="empty" @click="enlarge = true">댓글을 남겨주세요.</div>
-    <div v-else class="content-container">
-      <textarea v-model="content" placeholder="댓글을 남겨주세요."></textarea>
+    <div class="content-container">
+      <textarea v-model="content" placeholder="대댓글을 남겨주세요."></textarea>
       <div class="foot">
-        <a @click.prevent="enlarge = false">취소</a>
+        <a @click.prevent="$emit('close')">취소</a>
         <a
           :class="[content !== null && content !== '' && 'active']"
           @click.prevent="uploadComment"
@@ -21,28 +20,27 @@ export default {
     CameraIcon
   },
   props: {
-    articleId: {
+    commentId: {
       type: String,
       required: true
     }
   },
   data() {
     return {
-      enlarge: false,
       content: null
     };
   },
   methods: {
     async uploadComment() {
-      const data = await this.$api.$post("/comment/create", {
+      const data = await this.$api.$post("/reply/create", {
+        comment: this.commentId,
         content: this.content,
-        article: this.articleId
       });
       if (!data) {
         return;
       }
-      this.enlarge = false;
       this.content = null;
+      this.$emit('close');
     }
   }
 };
