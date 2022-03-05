@@ -42,11 +42,12 @@ export default {
       if (data.error) {
         return;
       }
-
-      this.mainContent = data.content;
+  
+      this.mainContent = data.content.sort((a, b)=> new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime());
     }
   }
 };
+
 </script>
 <style lang="scss">
 .main-container {

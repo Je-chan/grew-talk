@@ -26,6 +26,7 @@ export default {
     "@/plugins/time.js",
     {
       src: "@/plugins/infinite.js",
+      // 서버측 연산을 할 때는 하지 않는다. InfiniteLoading 은 클라이언트에서만 한다는 것을 의미.
       ssr: false,
     },
   ],

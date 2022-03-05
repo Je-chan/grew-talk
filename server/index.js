@@ -1,6 +1,14 @@
 const express = require('express');
 const cors = require('cors');
-const { article, board, comment, department, reply, user } = require('./route');
+const {
+  article,
+  board,
+  comment,
+  department,
+  reply,
+  search,
+  user,
+} = require('./route');
 const app = express();
 const PORT = 9090;
 const SECRET = '@secret!community~for@#gridwiz';
@@ -18,6 +26,7 @@ app.use(board);
 app.use(comment);
 app.use(department);
 app.use(reply);
+app.use(search);
 app.use(user);
 
 // 서버 상태 확인

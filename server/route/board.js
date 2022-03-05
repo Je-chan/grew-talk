@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Article, Comment, Board } = require('../mongoose/model');
+const { Article, Board } = require('../mongoose/model');
 
 // 메인에서 여러 게시판 글을 모아서 보여주는 라우트
 router.get('/main', async (req, res) => {
@@ -83,7 +83,7 @@ router.get('/board/:slug', async (req, res) => {
     .limit(6)
     .populate({
       path: 'author',
-      populate: { path: 'company' },
+      populate: { path: 'department' },
     });
 
   const formatedArtilce = article.map((v) => {

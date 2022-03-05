@@ -9,7 +9,7 @@
     </ol>
     <p>
       <InfoIcon size="1x" />
-      <span style="margin-left: 5px;">Grid talk talk에서 실시간으로 많이 검색된 회사 순위</span>
+      <span style="margin-left: 5px;">Grid talk talk에서 실시간으로 많이 검색된 부서 순위</span>
     </p>
   </aside>
 </template>

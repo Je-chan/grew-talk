@@ -1,19 +1,71 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const { Article } = require('../mongoose/model');
+const { Article, Comment, Reply } = require('../mongoose/model');
 
-// 개별 게시글 가져오기
-router.get('/article/:id', async (req, res) => {
-  const { id } = req.params;
-  const article = await Article.findById(id);
-  const comment = await Comment.find({ article: id });
-  res.send({ article, comment });
+// 개별 게시글 가져오는 라우트
+router.get('/article/:key', async (req, res) => {
+  const { key } = req.params;
+  const article = await Article.findOne({ key: key })
+    .populate('board')
+    .populate({
+      path: 'author',
+      populate: { path: 'department' },
+    });
+
+  const commentList = await Comment.find({ article: article._id }).populate({
+    path: 'author',
+    populate: { path: 'department' },
+  });
+
+  Promise.all(
+    commentList.map(async (v) => {
+      const replies = await Reply.find({ comment: v._doc._id }).populate({
+        path: 'author',
+        populate: { path: 'department' },
+      });
+      return {
+        ...v._doc,
+        author: {
+          ...v._doc.author._doc,
+          nickname: `${v._doc.author._doc.nickname[0]}${'*'.repeat(
+            v._doc.author._doc.nickname.length - 1
+          )}`,
+        },
+        replies: replies.map((r) => {
+          return {
+            ...r._doc,
+            author: {
+              ...r._doc.author._doc,
+              nickname: `${r._doc.author._doc.nickname[0]}${'*'.repeat(
+                r._doc.author._doc.nickname.length - 1
+              )}`,
+            },
+          };
+        }), // 대댓글 배열
+      };
+    })
+  )
+    .then((comment) => {
+      res.send({
+        article: {
+          ...article._doc,
+          author: {
+            ...article._doc.author._doc,
+            nickname: `${article.author._doc.nickname[0]}${'*'.repeat(
+              article._doc.author._doc.nickname.length - 1
+            )}`,
+          },
+        },
+        comment: comment,
+      });
+    })
+    .catch(() => {});
 });
 
-// 게시글 생성하기
+// 게시글 추가
 router.post('/article/create', async (req, res) => {
-  const { title, content, board } = req.body;
+  const { title, content, board, image } = req.body;
   const { authorization } = req.headers;
 
   if (!authorization) {
@@ -27,27 +79,29 @@ router.post('/article/create', async (req, res) => {
   const secret = req.app.get('jwt-secret');
 
   jwt.verify(token, secret, async (err, data) => {
-    if (err) res.send(err);
-    const newArticle = await Article({
+    if (err) {
+      res.send(err);
+    }
+    const payload = {
       author: data.id,
       title,
       content,
       board,
-    }).save();
+      articleImgAddress: image,
+    };
+    const newArticle = await Article(payload).save();
     res.send(newArticle);
   });
 });
 
-// 게시글 수정하기
+// 게시글 수정
 router.patch('/article/update', async (req, res) => {
   const { id, author, content } = req.body;
   const updatedArticle = await Article.findOneAndUpdate(
-    // 여기는 where 구문
     {
       _id: id,
       author,
     },
-    // 여기는 수정할 내용 부분
     {
       content,
     },
@@ -58,27 +112,26 @@ router.patch('/article/update', async (req, res) => {
   res.send(updatedArticle);
 });
 
-// 게시글 삭제하기
+// 게시글 완전 삭제(HARD DELETE)
 router.delete('/article/delete/hard', async (req, res) => {
   const { id, author } = req.body;
-  const deletedArticle = await Comment.deleteOne({
+  const deletedArticle = await Article.deleteOne({
     _id: id,
     author,
   });
   res.send(deletedArticle);
 });
 
-// 게시글 소프트 삭제
+// 게시글 소프트 삭제(SOFT DELETE)
 router.delete('/article/delete/soft', async (req, res) => {
   const { id, author } = req.body;
-  const deletedArticle = await Article.deleteOne(
+  const deletedArticle = await Article.findOneAndUpdate(
     {
       _id: id,
       author,
     },
     {
-      // 30일 이후 삭제
-      deleteTime: new Date().getTime() + 30 * 24 * 60 * 60 * 60 * 1000,
+      deleteTime: new Date().getTime() + 30 * 24 * 60 * 60 * 1000, // 30일 후의 시간이 저장
     }
   );
   res.send(deletedArticle);
