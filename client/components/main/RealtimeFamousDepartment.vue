@@ -1,6 +1,6 @@
 <template>
   <aside>
-    <div class="head">실시간 인기 회사</div>
+    <div class="head">실시간 인기 부서</div>
     <ol>
       <li v-for="(c, i) in departmentList" :key="c._id">
         <em>{{i + 1}}</em>

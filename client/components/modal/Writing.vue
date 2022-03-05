@@ -161,6 +161,7 @@ export default {
     }
     .board-container {
       position: absolute;
+      top:  200px;
       overflow-y: auto;
       width: inherit;
       border-bottom: 1px solid #d4d4d4;

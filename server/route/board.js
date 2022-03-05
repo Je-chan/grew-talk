@@ -50,23 +50,54 @@ router.get('/main', async (req, res) => {
     });
 });
 
+// 게시판 목록을 불러오는 라우트
+router.get('/board/list', async (req, res) => {
+  const board = await Board.find();
+  res.send(board);
+});
+
 // 게시판별 게시글 가져오는 라우트
 router.get('/board/:slug', async (req, res) => {
   const { slug } = req.params;
-  // 무한 스크롤 구현시 사용할 부분
-  // const {lastIndex} = req.query
+  const { lastIndex } = req.query; // 무한 스크롤 구현시 사용할 부분
 
   const board = await Board.findOne({ slug });
-
-  if (!board || !board._id) {
+  if (!board._id) {
     return res.send({
       article: [],
       error: true,
       msg: '존재하지 않는 게시판',
     });
   }
-  const article = await Article.find({ board: board._id });
-  res.send({ article, error: false, msg: 'success' });
+
+  const findOption = {
+    board: board._id,
+  };
+
+  if (lastIndex !== '0') {
+    findOption._id = { $lt: lastIndex };
+  }
+
+  const article = await Article.find(findOption)
+    .sort({ _id: -1 })
+    .limit(6)
+    .populate({
+      path: 'author',
+      populate: { path: 'company' },
+    });
+
+  const formatedArtilce = article.map((v) => {
+    return {
+      ...v._doc,
+      author: {
+        ...v._doc.author._doc,
+        nickname: `${v._doc.author._doc.nickname[0]}${'*'.repeat(
+          v._doc.author._doc.nickname.length - 1
+        )}`,
+      },
+    };
+  });
+  res.send({ article: formatedArtilce, error: false, msg: '성공' });
 });
 
 // 관리자용 게시판 추가
