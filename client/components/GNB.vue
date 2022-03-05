@@ -6,7 +6,7 @@
           <img src="/logo/gridwiz.svg" alt="블라인드 로고" />
         </nuxt-link>
         <nuxt-link to="/" :class="['text-menu', $route.name === 'index' && 'active']">홈</nuxt-link>
-        <nuxt-link to="/company" :class="['text-menu', $route.name === 'company' && 'active']">기업 리뷰</nuxt-link>
+        <nuxt-link to="/department" :class="['text-menu', $route.name === 'department' && 'active']">기업 리뷰</nuxt-link>
       </div>
       <div class="side-block">
         <SmallSearchbar />

@@ -29,8 +29,8 @@
           key: article.key
         }
       }"
-          class="company"
-        >{{article.author.company.name}}</nuxt-link>
+          class="department"
+        >{{article.author.department.name}}</nuxt-link>
         <nuxt-link
           :to="{
         name: 'post-key',

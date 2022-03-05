@@ -3,8 +3,8 @@
     <main>
       <Breadcrumb :title="article.board.title" :slug="article.board.slug" />
       <h1>{{article.title}}</h1>
-      <div class="company">
-        <span style="color: #37acc9;">{{article.author.company.name}}</span>
+      <div class="department">
+        <span style="color: #37acc9;">{{article.author.department.name}}</span>
         <span>·</span>
         <span>{{article.author.nickname}}</span>
       </div>
@@ -121,7 +121,7 @@ h1 {
 h5 {
   font-size: 16px;
 }
-.company {
+.department {
   font-size: 14px;
   margin: 15px 0;
 }

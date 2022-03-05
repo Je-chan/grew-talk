@@ -1,7 +1,7 @@
 <template>
   <div class="cmt reply">
     <div class="head">
-      <span style="color: #37acc9;">{{comment.author.company.name}}</span>
+      <span style="color: #37acc9;">{{comment.author.department.name}}</span>
       <span>·</span>
       <span>{{comment.author.nickname}}</span>
     </div>

@@ -13,19 +13,19 @@
         />
       </div>
     </main>
-    <RealtimeFamousCompany />
+    <RealtimeFamousDepartment />
   </div>
 </template>
 <script>
 import BestBoardCard from "@/components/Main/BestBoardCard";
 import BoardCard from "@/components/Main/BoardCard";
-import RealtimeFamousCompany from "@/components/Main/RealtimeFamousCompany";
+import RealtimeFamousDepartment from "@/components/Main/RealtimeFamousDepartment";
 
 export default {
   components: {
     BestBoardCard,
     BoardCard,
-    RealtimeFamousCompany
+    RealtimeFamousDepartment
   },
   data() {
     return {

@@ -49,7 +49,7 @@ export default {
     MessageCircleIcon,
     ThumbsUpIcon
   },
-  data() {
+  data() {``
     return {
       boardList: {}
     };

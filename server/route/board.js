@@ -26,6 +26,8 @@ router.get('/main', async (req, res) => {
         return;
       }
       mainContent.push({
+        // _doc의 형태로 Object 가 들어온다.
+
         ...b._doc,
         content: recentArticles,
       });
@@ -55,7 +57,8 @@ router.get('/board/:slug', async (req, res) => {
   // const {lastIndex} = req.query
 
   const board = await Board.findOne({ slug });
-  if (!board._id) {
+
+  if (!board || !board._id) {
     return res.send({
       article: [],
       error: true,

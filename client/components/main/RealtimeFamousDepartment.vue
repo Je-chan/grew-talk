@@ -2,19 +2,19 @@
   <aside>
     <div class="head">실시간 인기 회사</div>
     <ol>
-      <li v-for="(c, i) in companyList" :key="c._id">
+      <li v-for="(c, i) in departmentList" :key="c._id">
         <em>{{i + 1}}</em>
         {{c.name}}
       </li>
     </ol>
     <p>
       <InfoIcon size="1x" />
-      <span style="margin-left: 5px;">블라인드에서 실시간으로 많이 검색된 회사 순위</span>
+      <span style="margin-left: 5px;">Grid talk talk에서 실시간으로 많이 검색된 회사 순위</span>
     </p>
   </aside>
 </template>
 <script>
-import { InfoIcon } from "vue-feather-icons";
+import { InfoIcon   } from "vue-feather-icons";
 
 export default {
   components: {
@@ -22,16 +22,16 @@ export default {
   },
   data() {
     return {
-      companyList: []
+      departmentList: []
     };
   },
   created() {
-    this.getRealtimeFamousCompany();
+    this.getRealtimeFamousDepartment();
   },
   methods: {
-    async getRealtimeFamousCompany() {
-      const data = await this.$api.$get("/company/list/famous");
-      this.companyList = data;
+    async getRealtimeFamousDepartment() {
+      const data = await this.$api.$get("/department/list/famous");
+      this.departmentList = data;
     }
   }
 };
