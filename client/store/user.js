@@ -1,7 +1,7 @@
 // 로그인 사용자 상태
 export const state = () => ({
   email: null,
-  nickname: null
+  nickname: null,
 });
 
 export const mutations = {
@@ -13,7 +13,7 @@ export const mutations = {
     } else {
       localStorage.removeItem("token");
     }
-  }
+  },
 };
 
 export const actions = {};

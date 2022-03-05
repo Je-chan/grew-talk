@@ -22,7 +22,7 @@ User.virtual('password').set(function (password) {
 // Salt 생성 함수
 User.method('makeSalt', function () {
   return (
-    Math.round(new Date().valueOf() * Math.random()) + 'passwordgoodforondlove'
+    Math.round(new Date().valueOf() * Math.random()) + 'passwordgo odforondlove'
   );
 });
 

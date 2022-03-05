@@ -67,12 +67,12 @@ export default {
 
   methods: {
     async loginWithEmail() {
-      const data = await this.$axios.$post(`http://localhost:3000/user/login`, {
+      const data = await this.$axios.$post(`http://localhost:9090/user/login`, {
         email: this.email,
         password: this.password
       });
 
-      // 로그인 에러 캐칭
+      // 로그인에 에러가 발생했을 때
       if (data.error) {
         return;
       }
@@ -82,7 +82,7 @@ export default {
         nickname: data.nickname,
         token: data.token
       });
-
+      // 창 닫아버리기
       this.$store.commit("modal/SET_LOGIN_MODAL_CLOSE");
     },
     // 시간에 대해서 좀더 친절하게 설명해주기 위한 부분
