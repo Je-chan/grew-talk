@@ -17,10 +17,12 @@
     <div class="body">
       <ul class="article-list">
         <li v-for="a in articleList" :key="a.id">
+          <!-- TODO 이 span 태그를 누르면 그에 해당하는 게시글로 넘어갈 수 있도록 만들 것 -->
           <span class="article-title">{{a.title}}</span>
           <div class="count-display">
             <div class="count-item">
               <EyeIcon size="1x" class="icon" />
+              
               {{a.viewCount}}
             </div>
           </div>

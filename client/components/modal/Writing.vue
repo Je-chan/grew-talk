@@ -54,6 +54,7 @@ import {
 } from "vue-feather-icons";
 import ConfirmModal from "@/components/Modal/Confirm";
 import { mapState } from "vuex";
+  // TODO 글쓰기에서도 글을 다 쓰고 나면 글 쓴 내용이 바로 업데이트가 될 수 있도록 만든다.
 
 export default {
   components: {
