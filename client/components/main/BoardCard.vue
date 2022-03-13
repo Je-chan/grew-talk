@@ -17,8 +17,16 @@
     <div class="body">
       <ul class="article-list">
         <li v-for="a in articleList" :key="a.id">
-          <!-- TODO 이 span 태그를 누르면 그에 해당하는 게시글로 넘어갈 수 있도록 만들 것 -->
-          <span class="article-title">{{a.title}}</span>
+          <nuxt-link
+            :to="{
+            name: 'post-key',
+            params: {
+              key: a.key
+            }
+          }"
+            class="title"
+          >
+          {{a.title}}</nuxt-link>
           <div class="count-display">
             <div class="count-item">
               <EyeIcon size="1x" class="icon" />
@@ -52,8 +60,24 @@ export default {
   },
   components: {
     EyeIcon
+  },
+
+  setup(props) {
+    console.log(props.articleList[0])
+    const sendArticle = (e) => {
+      console.log(e.target)
+    }
+
+    return {
+      sendArticle
+    }
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+a.title {
+  width: 100%;
+  opacity: 1;
+  color: black;
+}
 </style>

@@ -92,6 +92,7 @@ export default {
     BookmarkIcon,
     MoreHorizontalIcon
   },
+  // TODO InputComment 를 한 후에 Emits 를 발동시켜서 작성된 댓글도 바로 업데이트할 수 있도록 한다. Reply 도 마찬가지로 진행할 것
   data() {
     return {
       key: null,
@@ -101,6 +102,7 @@ export default {
   },
   created() {
     this.getArticle();
+    console.log(this.key)
   },
   methods: {
     async getArticle() {
@@ -149,3 +151,4 @@ h5 {
   line-height: 28px;
 }
 </style>
+
